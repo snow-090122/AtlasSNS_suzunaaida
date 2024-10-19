@@ -35,12 +35,6 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        return redirect('added');
     }
 
-    public function added(): View
-    {
-        return view('auth.added');
-    }
 }
