@@ -3,10 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PostsController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,21 +34,13 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/search', [UsersController::class, 'search']);
   Route::post('/search', [UsersController::class, 'search']);
 
-  Route::post('/follow', [FollowsController::class, 'follow']);
-  Route::post('/remove', [FollowsController::class, 'remove']);
-
-  Route::get('/follow-list', [FollowsController::class, 'followList']);
-  Route::get('/follower-list', [FollowsController::class, 'followerList']);
 
   Route::get('/logout', [UsersController::class, 'logout']);
 });
 
-//ログアウト中
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-
-Route::get('/register', [RegisterController::class, 'register']);
 Route::post('/register', [RegisterController::class, 'register']);
 
-Route::get('/added', [RegisterController::class, 'added']);
 Route::post('/added', [RegisterController::class, 'added']);
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
