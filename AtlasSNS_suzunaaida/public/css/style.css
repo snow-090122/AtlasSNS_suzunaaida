@@ -160,3 +160,71 @@ a:visited {
     color: #ffffff;
     border-radius: 10px;
 }
+
+.follow-list-link,
+.follow-list-link {
+    text-align: right;
+}
+
+.search-link {
+    text-align: center;
+    margin: 20px;
+}
+
+.search-link a {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+}
+
+.red {
+    color: #ff0000;
+}
+
+.center {
+    text-align: center;
+}
+
+/* top */
+.post-box img {
+    vertical-align: top;
+}
+
+.post-form {
+    width: 75%;
+    height: 50px;
+    padding: 10px;
+    resize: none;
+    border: none;
+}
+
+/* timeline */
+.timeline-list {
+    padding: flex;
+    align-items: flex-start;
+}
+
+.tl-left {
+    margin: 0 20px 0 120px;
+}
+
+.tl-middle {
+    max-width: 550px;
+    overflow-wrap: break-word;
+}
+
+.tl-right {
+    margin-left: auto;
+}
+
+.tl-middle p {
+    margin: 5px 0;
+}
+
+.tl-right {
+    font-size: 0.8em;
+}
