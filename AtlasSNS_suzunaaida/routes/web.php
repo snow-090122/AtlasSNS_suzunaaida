@@ -3,9 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PostsController;
-use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use PHPUnit\Framework\RiskyTestError;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,9 +39,11 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/logout', [UsersController::class, 'logout']);
 });
 
-Route::post('/register', [RegisterController::class, 'register']);
-
-Route::post('/added', [RegisterController::class, 'added']);
-
 //Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 //Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/register', [RegisterController::class, 'register'])->name('register.store');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
+
+Route::get('/added', [RegisterController::class, 'added'])->name('added');
+Route::post('/added', [RegisterController::class, 'added']);

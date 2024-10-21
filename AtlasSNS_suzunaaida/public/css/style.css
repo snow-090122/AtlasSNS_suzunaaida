@@ -228,3 +228,34 @@ a:visited {
 .tl-right {
     font-size: 0.8em;
 }
+
+.tl-middle p {
+    margin: 5px 0;
+}
+
+.tl-right {
+    font-size: 0.8em;
+}
+
+/* delete-btn */
+.btn-wrapper {
+    text-align: right;
+    margin-right: 30px;
+}
+
+.delete-box {
+    position: relative;
+}
+
+.delete-btn {
+    position: absolute;
+}
+
+.delete-btn:first-child:hover {
+    opacity: 0;
+}
+
+.delete-btn:last-child {
+    opacity: 0;
+    transition: 0.3s;
+}
