@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-
 class RegisteredUserController extends Controller
 {
     /**
@@ -22,7 +21,6 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register');
     }
-
     /**
      * Handle an incoming registration request.
      *
@@ -35,6 +33,10 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        return redirect('added');
     }
-
+    public function added(): View
+    {
+        return view('auth.added');
+    }
 }

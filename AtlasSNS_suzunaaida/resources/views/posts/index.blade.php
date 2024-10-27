@@ -10,7 +10,7 @@
     </ul>
   @endif
 
-    {{ Form::open(['action' => 'PostsController@postCreate']) }}
+    {{ Form::open(['url' => '/postCreate']) }}
     @csrf
     @if(Auth::user()->images === 'icon1.png')
     <img class="icon" src="{{ asset('images/icon1.png') }}">
@@ -60,7 +60,7 @@
     <div class="modal-main">
       <div class="modal-inner"></div>
       <div class="modal-box">
-        {{ Form::open(['action' => 'PostsController@postEdit', 'id' => 'modal-form']) }}
+        {{ Form::open(['url' => '/post/edit', 'id' => 'modal-form']) }}
         @csrf
         <textarea class="edit-post" name="editpost"></textarea>
         <input type="hidden" class="edit-id" name="edit-id">

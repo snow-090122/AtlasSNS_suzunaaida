@@ -24,8 +24,8 @@ Route::get('/', function () {
 
 require __DIR__ . '/auth.php';
 Route::group(['middleware' => 'auth'], function () {
-  Route::get('/top', [PostsController::class, 'idex']);
-  Route::post('/post', [PostsController::class, 'postCreate']);
+  Route::get('/top', [PostsController::class, 'index']);
+  Route::post('/postCreate', [PostsController::class, 'postCreate']);
   Route::post('/post/edit', [PostsController::class, 'postEdit']);
   Route::get('/delete/{id}', [PostsController::class, 'delete']);
 
@@ -42,8 +42,4 @@ Route::group(['middleware' => 'auth'], function () {
 //Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 //Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/register', [RegisterController::class, 'register'])->name('register.store');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
-
-Route::get('/added', [RegisterController::class, 'added'])->name('added');
-Route::post('/added', [RegisterController::class, 'added']);
+//Route::get('/register', [RegisterController::class, 'register'])->name('register.store');
