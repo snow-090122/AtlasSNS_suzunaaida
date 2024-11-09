@@ -1,4 +1,6 @@
 <x-login-layout>
+  @extends('layouts.login')
+
   @section('content')
 
   <div class="post-box">

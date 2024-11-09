@@ -11,11 +11,6 @@ class PostsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // フォローしているユーザーの投稿と自分自身の投稿を取得
-        //$posts = Post::whereIn('user_id', $user->follows()->pluck('followed_id'))
-        //->orWhere('user_id', $user->id)
-        //->orderBy('created_at', 'desc')
-        //->get();
         $posts = Post::get();
 
         return view('posts.index', ['posts' => $posts]);
