@@ -1,6 +1,4 @@
 <x-login-layout>
-  @section('content')
-
   @if($users->id == Auth::id())
     <div class="auth-profile-box">
 
@@ -120,7 +118,6 @@
       <p class="tl-right">{{ substr($post->created_at, 0, 16) }}</p>
       </div>
       </li>
-    @endforeach
     </ul>
     </div>
   @endif

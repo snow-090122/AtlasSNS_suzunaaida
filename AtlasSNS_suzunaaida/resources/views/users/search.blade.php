@@ -1,8 +1,4 @@
 <x-login-layout>
-  @section('content')
-
-
-
   <div class="search-box">
     {{ Form::open(['url' => '/search']) }}
     @csrf
@@ -39,7 +35,6 @@
       {{ Form::close() }}
     @endif
       </li>
-    @endforeach
     </ul>
   </div>
 

@@ -1,7 +1,4 @@
 <x-login-layout>
-  @extends('layouts.login')
-
-  @section('content')
 
   <div class="post-box">
     @if($errors->any())
@@ -15,7 +12,7 @@
     {{ Form::open(['url' => '/postCreate']) }}
     @csrf
     @if(Auth::user()->images === 'icon1.png')
-    <img class="icon" src="{{ asset('images/icon1.png') }}">
+    <img class="icon" src="{{ asset('images/icon.png') }}">
   @else
   <img class="icon" src="{{ asset('storage/' . Auth::user()->images) }}">
 @endif
@@ -31,7 +28,7 @@
       <div class="timeline-box">
         <div class="tl-left">
         @if($post->user->images === 'icon1.png')
-      <img class="icon" src="{{ asset('images/icon1.png') }}">
+      <img class="icon" src="{{ asset('images/icon.png') }}">
     @else
     <img class="icon" src="{{ asset('storage/' . $post->user->images) }}">
   @endif
@@ -71,5 +68,4 @@
       </div>
     </div>
   </div>
-  @endsection
 </x-login-layout>
