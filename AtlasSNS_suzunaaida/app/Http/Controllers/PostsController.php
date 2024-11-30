@@ -10,7 +10,7 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $users = Auth::user();
         $posts = Post::get();
 
         return view('posts.index', ['posts' => $posts]);
