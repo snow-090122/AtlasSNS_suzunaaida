@@ -36,16 +36,16 @@ class User extends Authenticatable
     ];
     public function posts()
     {
-        $this->hasMany('App\Post');
+        $this->hasMany(Post::class);
     }
 
     public function follows()
     {
-        return $this->belongsToMany('App\User', 'follows', 'following_id', 'followed_id');
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'followed_id');
     }
     public function followUsers()
     {
-        return $this->belongsToMany('App\User', 'follows', 'followed_id', 'following_id');
+        return $this->belongsToMany(User::class, 'follows', 'followed_id', 'following_id');
     }
 
 

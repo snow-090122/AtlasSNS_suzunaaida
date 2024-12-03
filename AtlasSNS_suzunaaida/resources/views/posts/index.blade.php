@@ -42,7 +42,7 @@
 
       <div class="btn-wrapper">
         @if($post->user_id == Auth::user()->id)
-      <a class="modalopen" post="{{ $post->post }}" post_id="{{ $post->id }}">
+      <a class="modalOpen" post="{{ $post->post }}" post_id="{{ $post->id }}">
       <img class="edit-btn btn" src="{{ asset('images/edit.png') }}" alt="編集">
       </a>
       <a href="/delete/{{ $post->id }}" class="delete-box" onclick="return confirm('この投稿を削除します。よろしいでしょうか？')">

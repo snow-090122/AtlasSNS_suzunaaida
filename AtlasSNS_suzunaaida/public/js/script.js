@@ -13,7 +13,7 @@ $(function () {
 
 // modal
 $(function () {
-  $('.modalopen').each(function () {
+  $('.modalOpen').each(function () {
     $(this).on('click', function () {
       $('.modal-main').fadeIn();
       var post = $(this).attr('post');

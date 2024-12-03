@@ -58,4 +58,34 @@ class PostsController extends Controller
 
         return redirect('/top');
     }
+    //編集画面を表示
+    public function edit($id)
+    {
+        $post = Post::findOrFail($id);
+
+        //自分の投稿であるかどうか確認
+        if ($post->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+        return view('posts.edit', ['post' => $post]);
+    }
+
+    //編集内容を保存
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'post' => 'required|min:1|max:150',
+        ]);
+
+        $post = Post::findOrFail($id);
+
+        //自分の投稿であることの確認
+        if ($post->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action');
+        }
+        $post->post = $validated['post'];
+        $post->save();
+
+        return redirect('/top')->with('status', '投稿が更新されました！');
+    }
 }

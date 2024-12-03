@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\Post;
+use App\Models\User;
+use App\Models\Post;
 
 class UsersController extends Controller
 {
@@ -15,9 +15,11 @@ class UsersController extends Controller
         return view('users.profile');
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        return view('users.search');
+        $keyword = $request->input('keyword');
+        $users = User::where('username', 'like', '%' . $keyword . '%')->get();
+        return view('users.search', compact('users', 'keyword'));
     }
     public function users()
     {
