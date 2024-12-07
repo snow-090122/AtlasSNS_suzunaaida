@@ -30,8 +30,8 @@
     <div id="container">
         {{ $slot }}
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="JavaScriptファイルのURL"></script>
-    <script src="JavaScriptファイルのURL"></script>
+    <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

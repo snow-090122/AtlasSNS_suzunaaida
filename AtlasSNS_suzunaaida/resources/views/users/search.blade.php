@@ -22,18 +22,17 @@
     @endif
 
       <p>{{$user->username}}</p>
-
-      @if(!Auth::user()->isFollowing($user->id))
-      {{Form::open(['url' => '/follow'])}}
-      @csrf
-      <input type="hidden" name="followed_id" value="{{$user->id}}">
-      <input type="hidden" value="フォローする" class="follow-btn">
-      {{Form::close()}}
-    @else
+      @if(Auth::user()->isFollowing($user->id))
       {{Form::open(['url' => '/remove'])}}
       @csrf
       <input type="hidden" name="followed_id" value="{{$user->id}}">
       <input type="submit" value="フォロー解除" class="remove-btn">
+      {{Form::close()}}
+    @else
+      {{Form::open(['url' => '/follow'])}}
+      @csrf
+      <input type="hidden" name="followed_id" value="{{$user->id}}">
+      <input type="submit" value="フォローする" class="follow-btn">
       {{Form::close()}}
     @endif
       </li>
