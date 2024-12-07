@@ -7,9 +7,14 @@ use App\Models\User;
 
 class FollowsController extends Controller
 {
-    public function follow(Request $request, User $user)
+    public function follow(Request $request)
     {
-        $request->user()->follow()->attach($user->id);
+        //リクエストからフォロー対象のユーザーIDを取得
+        $userId = $request->input('followed_id');
+        //フォロー対象のユーザーを取得
+        $followedUser = User::findOrFail($userId);
+        //現在のログインユーザーがフォローする
+        $request->user()->follow($followedUser);
 
         return redirect()->back()->with('success', 'フォローしました！');
     }
@@ -19,8 +24,9 @@ class FollowsController extends Controller
         return redirect()->back()->with('success', 'フォロー解除しました！');
     }
 
-    public function followList()
+    public function followerList(Request $request)
     {
-        return view('follow_list');
+        $followers = $request->user()->followers()->get();
+        return view('follower_list', compact('followers'));
     }
 }

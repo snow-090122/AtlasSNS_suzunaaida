@@ -45,9 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/logout', [UsersController::class, 'logout']);
 
   //フォロー関連
-  Route::post('/follow/{user}', [FollowsController::class, 'follow'])->name('follow');
-  Route::post('/unfollow/{user}', [FollowsController::class, 'unfollow'])->name('unfollow');
-  Route::get('/follow/list', [FollowsController::class, 'followList'])->name('follow.list');
+  Route::post('/follow', [FollowsController::class, 'follow'])->name('follow');
+  Route::post('/remove', [FollowsController::class, 'unfollow'])->name('unfollow');
+  Route::get('/follow-list', [FollowsController::class, 'followList'])->name('follow.list');
+  Route::get('/follower-list', [FollowsController::class, 'followerList'])->name('follower.list');
 });
 
 //ログアウト中のページ

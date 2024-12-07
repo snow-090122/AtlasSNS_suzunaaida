@@ -23,13 +23,13 @@
 
       <p>{{$user->username}}</p>
       @if(Auth::user()->isFollowing($user->id))
-      {{Form::open(['url' => '/remove'])}}
+      {{Form::open(['route' => 'unfollow'])}}
       @csrf
       <input type="hidden" name="followed_id" value="{{$user->id}}">
       <input type="submit" value="フォロー解除" class="remove-btn">
       {{Form::close()}}
     @else
-      {{Form::open(['url' => '/follow'])}}
+      {{Form::open(['route' => 'follow'])}}
       @csrf
       <input type="hidden" name="followed_id" value="{{$user->id}}">
       <input type="submit" value="フォローする" class="follow-btn">
