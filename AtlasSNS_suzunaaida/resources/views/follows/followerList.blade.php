@@ -14,7 +14,7 @@
 
   <div>
     <ul>
-      @foreach ($followed_posts as $post)
+      @forelse ($followed_posts as $post)
       <li class="timeline-list">
       <div class="timeline-box">
         <div class="tl-left">
@@ -23,16 +23,16 @@
         </a>
         </div>
         <div class="tl-middle">
-        <p>{{$post->user->username}}</p>
-        <p>{!! nl2br(e($post->post))!!}</p>
+        <p>{{ $post->user->username }}</p>
+        <p>{!! nl2br(e($post->post)) !!}</p>
         </div>
-        <p class="tl-right">{{$post->created_at->format('Y-m-d h:i')}}</p>
+        <p class="tl-right">{{ $post->created_at->format('Y-m-d h:i') }}</p>
       </div>
       </li>
-      @empty
+    @empty
       <p>投稿がありません</p>
-      @endforelse
-      </ul>
-      </div>
-    @endforeach
+    @endforelse
+    </ul>
+  </div>
+
 </x-login-layout>
