@@ -4,7 +4,7 @@
     <div class="icon-wrapper">
       @forelse($followed as $follow)
       <a href="/profile/{{$follow->id}}">
-      <img src="{{$follow->images === 'icon1.png' ? asset('images/icon1.png') : asset('storage/' . $follow->images)}}" class="icon" alt="{{$follow->username}}'s icon">
+      <img src="{{$follow->images === 'icon1.png' ? asset('images/icon1.png') : asset('images/' . $follow->images)}}" class="icon" alt="{{$follow->username}}'s icon">
       </a>
     @empty
       <p>フォローがいません</p>

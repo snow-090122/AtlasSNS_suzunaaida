@@ -45,14 +45,14 @@
       <input type="text" value="{{ $users->bio }}" name="bio" id="bio" maxlength="150">
     </div>
     @error('bio')
-    <div class="red">{{ $$message }}</div>
+    <div class="red">{{ $message }}</div>
   @enderror
 
     <div class="profile-edit">
       <label for="images">アイコン画像</label>
       <label for="images" class="custom-upload">ファイルを選択</label>
 
-      <input type="file" name="images" id="images" accept=".jpg,.png,.bmp,.gif,.svg" class="file-upload">
+      <input type="file" name="images" id="images" accept=".jpg,.png,.bmp,.gif,.svg" class="file-upload" hidden>
     </div>
     @error('images')
     <div class="red">{{ $message }}</div>
@@ -84,19 +84,11 @@
 
     @if(!Auth::user()->isFollowing($users->id))
 
-    {{ Form::open(['url' => '/follow']) }}
-    @csrf
-    <input type="hidden" name="followed_id" value="{{ $users->id }}">
-    <input type="submit" value="フォローする" class="follow-btn">
-    {{ Form::close() }}
+  {{ Form::open(['url' => Auth::user()->isFollowing($users->id) ? '/remove' : '/follow']) }}
+<input type="hidden" name="followed_id" value="{{ $users->id }}">
+<input type="submit" value="{{ Auth::user()->isFollowing($users->id) ? 'フォロー解除' : 'フォローする' }}" class="{{ Auth::user()->isFollowing($users->id) ? 'remove-btn' : 'follow-btn' }}">
+{{ Form::close() }}
 
-  @else
-  {{ Form::open(['url' => '/remove']) }}
-  @csrf
-  <input type="hidden" name="followed_id" value="{{ $users->id }}">
-  <input type="submit" value="フォロー解除" class="remove-btn">
-  {{ Form::close() }}
-@endif
     </div>
 
     <div>

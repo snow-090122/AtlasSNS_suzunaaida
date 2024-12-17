@@ -36,7 +36,6 @@ Route::group(['middleware' => 'auth'], function () {
   //プロフィール関連
   Route::get('/profile/{id}', [UsersController::class, 'profile']);
   Route::post('/profile/edit', [UsersController::class, 'profileEdit'])->name('profile.edit');
-
   //検索関連
   Route::get('/search', [UsersController::class, 'search']);
   Route::post('/search', [UsersController::class, 'search']);
@@ -57,5 +56,6 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-Route::get('/register', [RegisterController::class, 'create'])->name('register');
-Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+Route::get('/added', [RegisterController::class, 'added'])->name('added');

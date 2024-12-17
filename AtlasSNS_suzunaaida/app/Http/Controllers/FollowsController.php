@@ -12,7 +12,7 @@ class FollowsController extends Controller
 {
     public function followList()
     {
-        $follows = Auth::user()->follows()->get();
+        $follow = Auth::user()->follows()->get();
         $follows_id = Auth::user()->follows()->pluck('followed_id');
 
         $follows_posts = Post::with('user')
@@ -21,7 +21,7 @@ class FollowsController extends Controller
             ->get();
 
         return view('follows.followList', [
-            'follows' => $follows,
+            'follows' => $follow,
             'follows_posts' => $follows_posts,
         ]);
     }

@@ -1,22 +1,21 @@
 <x-logout-layout>
-    <!-- 適切なURLを入力してください -->
     {!! Form::open(['url' => 'register']) !!}
-
+    @csrf
     <h2>新規ユーザー登録</h2>
 
     {{ Form::label('ユーザー名') }}
-    {{ Form::text('username', null, ['class' => 'input']) }}
+    {{ Form::text('username', null, ['class' => 'input', 'required' => true]) }}
 
     {{ Form::label('メールアドレス') }}
-    {{ Form::email('email', null, ['class' => 'input']) }}
+    {{ Form::email('email', null, ['class' => 'input', 'required' => true]) }}
 
     {{ Form::label('パスワード') }}
-    {{ Form::text('password', null, ['class' => 'input']) }}
+    {{ Form::text('password', null, ['class' => 'input', 'required' => true]) }}
 
     {{ Form::label('パスワード確認') }}
-    {{ Form::text('password_confirmation', null, ['class' => 'input']) }}
+    {{ Form::text('password_confirmation', null, ['class' => 'input', 'required' => true]) }}
 
-    {{ Form::submit('登録') }}
+    {{ Form::submit('登録', ['class' => 'btn']) }}
 
     <p><a href="/login">ログイン画面へ戻る</a></p>
 

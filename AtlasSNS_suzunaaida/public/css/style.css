@@ -22,11 +22,6 @@ header {
     width: 120px;
 }
 
-#header-menu {
-    display: flex;
-    flex-wrap: nowrap;
-    text-align: center;
-}
 
 #header-menu p {
     position: relative;

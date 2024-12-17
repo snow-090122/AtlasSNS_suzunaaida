@@ -56,6 +56,7 @@ $(function () {
   });
 });
 
+var user = window.user || null;
 if (user && user.username) {
   console.log(user.username);
 } else {

@@ -32,6 +32,6 @@
     </div>
     <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

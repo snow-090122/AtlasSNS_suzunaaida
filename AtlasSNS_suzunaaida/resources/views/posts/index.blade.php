@@ -14,7 +14,7 @@
     @if(Auth::user()->images === 'icon1.png')
     <img class="icon" src="{{ asset('images/icon.png') }}">
   @else
-  <img class="icon" src="{{ asset('storage/' . Auth::user()->images) }}">
+  <img class="icon" src="{{ asset('images/' . Auth::user()->images) }}">
 @endif
     {{ Form::textarea('post', '', ['class' => 'post-form', 'placeholder' => '投稿内容を入力してください。']) }}
     <input type="image" name="submit" src="{{ asset('images/post.png') }}" alt="送信" class="submit-btn btn">
@@ -30,7 +30,7 @@
         @if($post->user->images === 'icon1.png')
       <img class="icon" src="{{ asset('images/icon.png') }}">
     @else
-    <img class="icon" src="{{ asset('storage/' . $post->user->images) }}">
+    <img class="icon" src="{{asset('images/icon.png')}}">
   @endif
         </div>
         <div class="tl-middle">
