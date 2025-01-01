@@ -39,7 +39,7 @@ class User extends Authenticatable
     //リレーション　ユーザの投稿
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->latest();
     }
 
     //リレーション　フォローしているユーザー

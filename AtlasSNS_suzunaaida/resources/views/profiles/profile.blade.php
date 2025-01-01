@@ -1,23 +1,17 @@
 <x-login-layout>
   @if($users->id == Auth::id())
     <div class="auth-profile-box">
-
-    @if($users->images === 'icon1.png')
-    <img src="{{asset('images/icon1.png')}}" class="icon">
-  @else
-  <img src="{{asset('storage/' . $users->images)}}" class="icon">
-@endif
-    {{ Form::open(['route' => 'profile.edit', 'enctype' => 'multipart/form-data']) }}
-    @csrf
-
+<img src="{{$users->profile_image}}" class="icon">
+{{Form::open(['route'=>'profile.edit','method'=>'post','enctype'=>'multipart/form-data'])}}
+@csrf
 
     <div class="profile-edit">
       <label for="username">ユーザー名</label>
-      <input type="text" value="{{ $users->username }}" name="username" id="username" min="2" max="12" required>
-    </div>
-    @error('username')
-    <div class="red">{{ $message }}</div>
-  @enderror
+<input type="text" value="{{$users->username}}" name="username" id="username" required>
+@error('username')
+<div class="red">{{$message}}</div>
+@enderror
+</div>
 
     <div class="profile-edit">
       <label for="mail">メールアドレス</label>

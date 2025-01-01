@@ -5,8 +5,8 @@
       @if (!empty($follows) && $follows->isNotEmpty())
       @foreach ($follows as $item)
       <a href="/profile/{{$item->id}}">
-      @if ($item->images === 'icon1.png')
-      <img src="{{asset('images/icon1.png')}}" class="icon">
+      @if ($item->images === 'icon.png')
+      <img src="{{asset('images/icon.png')}}" class="icon">
     @else
       <img src="{{asset('images/' . $item->images)}}" class="icon">
     @endif
@@ -26,7 +26,7 @@
   <div class="timeline-box">
     <div class="tl-left">
       <a href="/profile/{{$post->user_id}}">
-        @if ($post->user->images==='icon1.png')
+        @if ($post->user->images==='icon2.png')
         <img src="{{asset('images/icon3.png')}}" class="icon">
         @endif
         </a>

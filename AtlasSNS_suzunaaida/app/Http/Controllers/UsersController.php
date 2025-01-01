@@ -63,8 +63,9 @@ class UsersController extends Controller
         }
 
         if ($request->hasFile('images')) {
-            $imagesName = $request->files('images')->store('public/images');
-            $user->update(['images' => basename($imagesName)]);
+            $imagesPath = $request->files('images')->store('public/images');
+            $imagesName = basename($imagesPath);
+            $user->update(['images' => $imagesName]);
         }
 
         return redirect('/top');
