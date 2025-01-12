@@ -1,15 +1,19 @@
 @charset "utf-8";
 
+html {}
+
+body {}
+
 h2 {
-    font-size: 1.3rem;
+    font-size: 1.3em;
 }
 
-/* header */
+/*ヘッダー*/
 header {
     background: #186AC9;
     max-width: 100%;
-    max-height: 10%;
-    padding: 20px;
+    max-height: 8%;
+    padding: 10px
 }
 
 #head {
@@ -22,27 +26,39 @@ header {
     width: 120px;
 }
 
+#header-menu {
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: center;
+}
 
 #header-menu p {
     position: relative;
     color: #fff;
     padding: 0 20px;
+    font-weight: bold;
+    font-size: 1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .header-name {
-    display: inline-block;
-    padding: 1em;
+    display: flex;
+    color: #fff;
+    font-size: 1em;
+    margin-right: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* triangle-button*/
+/*▼ボタン*/
 .triangle-btn {
     display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 15px;
-    border-right: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
+    width: 10px;
+    height: 10px;
+    margin: 10px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
     transform: rotate(45deg);
+    cursor: pointer;
 }
 
 .triangle-btn.active {
@@ -51,15 +67,15 @@ header {
     top: 12px;
 }
 
-/* accordion-menu */
+/*アコーディオンメニュー*/
 .accordion-menu {
     display: none;
 }
 
 .accordion-menu.active {
     display: block;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
+    background-color: #fff;
+    border: 1px solid #ccc;
     position: absolute;
     width: 20%;
     right: 0;
@@ -70,7 +86,7 @@ header {
     display: block;
     max-width: 100%;
     text-align: center;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .accordion-menu li:last-child {
@@ -78,7 +94,7 @@ header {
 }
 
 .accordion-menu li:hover {
-    background-color: #00297e;
+    background-color: #00297a;
 }
 
 .accordion-menu a {
@@ -92,10 +108,11 @@ a:visited {
 }
 
 .accordion-menu a:hover {
-    color: #ffffff;
+    color: #fff;
 }
 
-/* common */
+
+/*common*/
 #row {
     display: flex;
     position: relative;
@@ -114,7 +131,7 @@ a:visited {
 
 .post-box,
 .search-box,
-.profile-top,
+.profile-box,
 .follow-top {
     border-bottom: 6px solid #e0e0e0;
     padding: 30px;
@@ -122,15 +139,15 @@ a:visited {
 }
 
 .btn {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 50px;
     border-radius: 5px;
     cursor: pointer;
 }
 
 #confirm {
     padding: 20px;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .confirm-count {
@@ -148,13 +165,31 @@ a:visited {
     margin: 10px;
     min-width: 45%;
     background-color: #186AC9;
-    color: #ffffff;
+    color: #fff;
     border-radius: 10px;
 }
 
 .follow-list-link,
-.follow-list-link {
-    text-align: right;
+.follower-list-link {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.follow-list-link a,
+.follower-list-link a {
+    padding: 5px 15px;
+    font-size: 0.9em;
+    background-color: #186AC9;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.follow-list-link a:hover,
+.follower-list-link a:hover {
+    background-color: #0056b3;
 }
 
 .search-link {
@@ -170,7 +205,6 @@ a:visited {
 .icon {
     width: 50px;
     height: 50px;
-    margin: 5px;
 }
 
 .red {
@@ -181,7 +215,7 @@ a:visited {
     text-align: center;
 }
 
-/* top */
+/*トップページ*/
 .post-box img {
     vertical-align: top;
 }
@@ -194,10 +228,21 @@ a:visited {
     border: none;
 }
 
-/* timeline */
+/*timeline*/
 .timeline-list {
-    padding: flex;
-    align-items: flex-start;
+    padding: 30px;
+    border-bottom: 1px solid #ccc;
+}
+
+.timeline-list:last-child {
+    border-bottom: none;
+}
+
+.timeline-box {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
 }
 
 .tl-left {
@@ -221,7 +266,7 @@ a:visited {
     font-size: 0.8em;
 }
 
-/* delete-btn */
+/*削除ボタン*/
 .btn-wrapper {
     text-align: right;
     margin-right: 30px;
@@ -249,7 +294,8 @@ a:visited {
     transition: 0.3s;
 }
 
-/* edit-modal */
+
+/*edit-modal*/
 .modal-main {
     display: none;
 }
@@ -270,7 +316,7 @@ a:visited {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 15px;
     width: 50%;
     padding: 30px;
@@ -294,9 +340,14 @@ a:visited {
 .edit-btn-modal {
     border: none;
     background: url(../images/edit.png);
+    background-size: contain;
 }
 
-/*follow/follower*/
+/*フォロー、フォロワー*/
+.follow-top {
+    display: flex;
+}
+
 .follow-top h2 {
     margin: 20px 30px 20px 50px;
 }
@@ -306,7 +357,11 @@ a:visited {
     text-align: left;
 }
 
-/*search*/
+.icon-wrapper .icon {
+    margin: 3px;
+}
+
+/*検索ページ*/
 .search-text {
     padding: 10px;
     width: 250px;
@@ -343,7 +398,7 @@ a:visited {
 }
 
 .search-list p {
-    margin-left: 30px;
+    margin-left: auto;
 }
 
 .search-list form {
@@ -358,7 +413,7 @@ a:visited {
     margin: 10px;
     width: 120px;
     background-color: #52acff;
-    color: #ffffff;
+    color: #fff;
     border-radius: 10px;
     border: none;
 }
@@ -368,7 +423,7 @@ a:visited {
     background-color: #ed3833;
 }
 
-/* profile */
+/*プロフィール*/
 .auth-profile-box {
     padding-top: 50px;
     text-align: center;

@@ -2,36 +2,41 @@
   <div class="follow-top">
     <h2>フォロワーリスト</h2>
     <div class="icon-wrapper">
-      @forelse($followed as $follow)
-      <a href="/profile/{{$follow->id}}">
-      <img src="{{$follow->images === 'icon1.png' ? asset('images/icon1.png') : asset('images/' . $follow->images)}}" class="icon" alt="{{$follow->username}}'s icon">
+      @foreach($followed as $follow)
+      <a href="/profile/{{ $follow->id }}">
+      @if($follow->images === 'icon1.png')
+      <img src="{{ asset('images/icon1.png')}}" class="icon">
+    @else
+      <img src="{{ asset('storage/' . $follow->images) }}" class="icon">
+    @endif
       </a>
-    @empty
-      <p>フォローがいません</p>
-    @endforelse
+    @endforeach
     </div>
   </div>
 
   <div>
     <ul>
-      @forelse ($followed_posts as $post)
+      @foreach($followed_posts as $post)
       <li class="timeline-list">
       <div class="timeline-box">
         <div class="tl-left">
-        <a href="/profile/{{$post->user_id}}">
-          <img src="{{ $post->user->images === 'icon1.png' ? asset('images/icon1.png') : asset('storage/' . $post->user->images) }}" class="icon" alt="{{ $post->user->username }}'s icon">
+        <a href="/profile/{{ $post->user_id }}">
+          @if($post->user->images === 'icon2.png')
+        <img src="{{ asset('images/icon.png') }}" class="icon">
+      @else
+      <img src="{{ $follow->images && file_exists(storage_path('app/public/' . $follow->images)) ? asset('storage/' . $follow->images) : asset('images/icon1.png') }}" class="icon">
+
+    @endif
         </a>
         </div>
         <div class="tl-middle">
         <p>{{ $post->user->username }}</p>
         <p>{!! nl2br(e($post->post)) !!}</p>
         </div>
-        <p class="tl-right">{{ $post->created_at->format('Y-m-d h:i') }}</p>
+        <p class="tl-right">{{ substr($post->created_at, 0, 16) }}</p>
       </div>
       </li>
-    @empty
-      <p>投稿がありません</p>
-    @endforelse
+    @endforeach
     </ul>
   </div>
 

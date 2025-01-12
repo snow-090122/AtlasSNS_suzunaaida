@@ -12,10 +12,9 @@ class UsersController extends Controller
 {
     public function profile($id)
     {
-        $user = User::findOrFail($id);
+        $users = User::findOrFail($id);
         $posts = Post::where('user_id', $id)->latest()->get();
-
-        return view('profile', compact('user', 'posts'));
+        return view('users.profile', compact('users', 'posts'));
     }
 
     public function logout()
@@ -28,44 +27,67 @@ class UsersController extends Controller
     {
         $keyword = $request->input('keyword');
 
-        $users = User::query()
-            ->when($keyword, function ($query, $keyword) {
-                $query->where('username', 'like', '%' . $keyword . '%')
-                    ->where('id', '!=', Auth::id());
-            })
-            ->where('id', '!=', Auth::id())
-            ->get();
+        if (!empty($keyword)) {
+            $users = User::where('username', 'like', '%' . $keyword . '%')->where('id', '!=', Auth::id())->get();
+        } else {
+            $users = User::where('id', '!=', Auth::id())->get();
+        }
 
-        return view('users.search', compact('users', 'keyword'));
+        return view('users.search', ['users' => $users, 'keyword' => $keyword]);
     }
 
     public function profileEdit(Request $request)
     {
         $id = $request->input('id');
+        $username = $request->input('username');
+        $mail = $request->input('mail');
+        $password = $request->input('password');
+        $bio = $request->input('bio');
+        $images = $request->file('images');
+
         $request->validate([
             'username' => 'required|string|min:2|max:12',
-            'mail' => 'required|string|email|min:5|max:40|unique:users,mail' . $id,
+            'mail' => 'required|string|min:5|max:40|email|unique:users,email,' . $id,
             'password' => 'nullable|min:8|max:20|regex:/^[a-zA-Z0-9]+$/|confirmed',
-            'bio' => 'nullable|max:150',
+            'bio' => 'max:150',
             'images' => 'nullable|mimes:jpg,png,bmp,gif,svg|max:2048',
         ]);
 
-        $user = User::findOrFail($id);
+        $updateDate = [
+            'username' => $username,
+            'email' => $mail,
+            'bio' => $bio,
+        ];
 
-        $user->update([
-            'username' => $request->input('username'),
-            'mail' => $request->input('mail'),
-            'bio' => $request->input('bio'),
-        ]);
+        if (!empty($password)) {
+            $updateDate['password'] = bcrypt($password);
+        }
+        if ($request->hasFile('images')) {
+            // 画像を取得
+            $images = $request->file('images');
 
-        if ($request->filled('password')) {
-            $user->update(['password' => bcrypt($request->input('password'))]);
+            // ユニークなファイル名を生成し、保存
+            $image_name = $images->hashName();
+            $images->store('public');
+
+            // データベースを更新
+            User::find($id)->update(['images' => $image_name]);
         }
 
         if ($request->hasFile('images')) {
-            $imagesPath = $request->files('images')->store('public/images');
-            $imagesName = basename($imagesPath);
-            $user->update(['images' => $imagesName]);
+            $user = User::find($id);
+
+            // 古い画像を削除
+            if ($user->images) {
+                Storage::delete('public/' . $user->images);
+            }
+
+            // 新しい画像を保存
+            $image_name = $images->hashName();
+            $images->store('public');
+
+            // データベースを更新
+            $user->update(['images' => $image_name]);
         }
 
         return redirect('/top');

@@ -12,19 +12,20 @@ class FollowsController extends Controller
 {
     public function followList()
     {
-        $follow = Auth::user()->follows()->get();
-        $follows_id = Auth::user()->follows()->pluck('followed_id');
+        $user = Auth::user();
 
         $follows_posts = Post::with('user')
-            ->whereIn('user_id', $follows_id)
-            ->orderBy('created_at', 'desc')
+            ->whereIn('user_id', $user->followUsers()->pluck('users.id')->toArray())
+            ->orderBy('posts.created_at', 'desc')
+            ->select('posts.*')
             ->get();
 
         return view('follows.followList', [
-            'follows' => $follow,
+            'follows' => $user->follows,
             'follows_posts' => $follows_posts,
         ]);
     }
+
 
     public function followerList(): \Illuminate\View\View
     {

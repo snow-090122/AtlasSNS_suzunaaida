@@ -11,8 +11,8 @@
 
     {{ Form::open(['url' => '/postCreate']) }}
     @csrf
-    @if(Auth::user()->images === 'icon1.png')
-    <img class="icon" src="{{ asset('images/icon.png') }}">
+    @if(Auth::user()->images === 'icon2.png')
+    <img class="icon" src="{{ asset('images/icon2.png') }}">
   @else
   <img class="icon" src="{{ asset('images/' . Auth::user()->images) }}">
 @endif

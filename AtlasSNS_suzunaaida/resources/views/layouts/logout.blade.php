@@ -24,11 +24,11 @@
 </head>
 <body>
     <header>
-        <h1><img src="{{asset('images/atlas.png')}}"></h1>
+        <h1><img src="{{asset('images/atlas.png')}}" alt="Atlas Logo"></h1>
         <p>Social Network Service</p>
     </header>
     <div id="container">
-        {{ $slot }}
+        {{$slot}}
     </div>
     <script src="http://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
