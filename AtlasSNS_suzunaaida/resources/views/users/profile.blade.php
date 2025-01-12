@@ -1,13 +1,28 @@
 <x-login-layout>
-  @if($users->id == Auth::id())
+  {{-- エラーメッセージの表示 --}}
+  @if($errors->any())
+    <div class="alert alert-danger">
+    <ul>
+      @foreach($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+    </ul>
+    </div>
+  @endif
+
+  @if(Auth::id() === $user->id)
     <div class="auth-profile-box">
-    <img src="{{ $users->profile_image ? asset('images/' . $users->profile_image) : asset('images/default-icon.png') }}" class="icon">
+    @if($user->images === 'icon1.png')
+    <img src="{{asset('images/icon1.png')}}" class="icon">
+  @else
+  <img src="{{asset('storage/' . $user->images)}}" class="icon">
+@endif
     {{ Form::open(['route' => 'profile.edit', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
     @csrf
 
     <div class="profile-edit">
       <label for="username">ユーザー名</label>
-      <input type="text" value="{{ old('username', $users->username) }}" name="username" id="username" required>
+      <input type="text" value="{{ old('username', $user->username) }}" name="username" id="username" required>
       @error('username')
       <div class="red">{{ $message }}</div>
     @enderror
@@ -15,7 +30,7 @@
 
     <div class="profile-edit">
       <label for="mail">メールアドレス</label>
-      <input type="email" value="{{ old('mail', $users->mail) }}" name="mail" id="mail" required>
+      <input type="email" value="{{ old('mail', $user->email) }}" name="mail" id="mail" required>
       @error('mail')
       <div class="red">{{ $message }}</div>
     @enderror
@@ -23,7 +38,7 @@
 
     <div class="profile-edit">
       <label for="password">パスワード</label>
-      <input type="password" name="password" id="password" placeholder="変更する場合のみ入力">
+      <input type="password" name="password" id="password">
       @error('password')
       <div class="red">{{ $message }}</div>
     @enderror
@@ -31,12 +46,12 @@
 
     <div class="profile-edit">
       <label for="password_confirmation">パスワード確認</label>
-      <input type="password" name="password_confirmation" id="password_confirmation" placeholder="上記と同じパスワードを入力">
+      <input type="password" name="password_confirmation" id="password_confirmation">
     </div>
 
     <div class="profile-edit">
       <label for="bio">自己紹介</label>
-      <textarea name="bio" id="bio" maxlength="150" placeholder="自己紹介を入力">{{ old('bio', $users->bio) }}</textarea>
+      <textarea name="bio" id="bio" maxlength="150" placeholder="自己紹介を入力">{{ old('bio', $user->bio) }}</textarea>
       @error('bio')
       <div class="red">{{ $message }}</div>
     @enderror
@@ -51,9 +66,12 @@
     @enderror
     </div>
 
-    <input type="hidden" name="id" value="{{ $users->id }}">
     <input type="submit" value="更新" class="profile-btn">
     {{ Form::close() }}
+    </div>
+  @else
+    <div class="alert alert-warning">
+    <p>このプロフィールは編集できません。</p>
     </div>
   @endif
 </x-login-layout>

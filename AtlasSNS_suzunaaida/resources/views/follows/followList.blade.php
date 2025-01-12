@@ -4,9 +4,13 @@
     <div class="icon-wrapper">
       @isset($follows)
       @if ($follows->isNotEmpty())
-      @foreach ($follows as $item)
-      <a href="/profile/{{ $item->id }}">
-      <img src="{{ $item->images && $item->images !== 'icon.png' ? asset('storage/' . $item->images) : asset('images/icon.png') }}" class="icon">
+      @foreach ($follows as $follow)
+      <a href="/profile/{{ $follow->id }}">
+      @if($follow->images === 'icon1.png')
+      <img src="{{asset('images/icon1.png')}}" class="icon">
+    @else
+      <img src="{{asset('storage/' . $follow->images)}}" class="icon">
+    @endif
       </a>
     @endforeach
     @else
@@ -25,7 +29,11 @@
       <div class="timeline-box">
       <div class="tl-left">
       <a href="/profile/{{ $post->user_id }}">
-      <img src="{{ $post->user->images === 'icon.png' ? asset('images/icon.png') : asset('storage/' . $post->user->images) }}" class="icon">
+      @if($post->user->images === 'icon1.png')
+      <img src="{{asset('images/icon1.png')}}" class="icon">
+    @else
+      <img src="{{asset('storage/' . $post->user->images)}}" class="icon">
+    @endif
       </a>
       </div>
       <div class="tl-middle">

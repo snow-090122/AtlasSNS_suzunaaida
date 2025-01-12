@@ -34,8 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/delete/{id}', [PostsController::class, 'delete']);
 
   //プロフィール関連
-  Route::get('/profile/{id}', [UsersController::class, 'profile']);
-  Route::post('/profile/edit', [UsersController::class, 'profileEdit'])->name('profile.edit');
+  Route::get('/profile/{id}', [UsersController::class, 'showUserProfile'])->name('profile.user');
+  Route::get('/profile', [UsersController::class, 'showMyProfile'])->name('profile.my');
+  Route::post('/profile/edit', [UsersController::class, 'editMyProfile'])->name('profile.edit');
   //検索関連
   Route::get('/search', [UsersController::class, 'search']);
   Route::post('/search', [UsersController::class, 'search']);

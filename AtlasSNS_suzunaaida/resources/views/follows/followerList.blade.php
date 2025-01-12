@@ -4,8 +4,8 @@
     <div class="icon-wrapper">
       @foreach($followed as $follow)
       <a href="/profile/{{ $follow->id }}">
-      @if($follow->images === 'icon1.png')
-      <img src="{{ asset('images/icon1.png')}}" class="icon">
+      @if($follow->images === 'icon1.png' || !$follow->images)
+      <img src="{{ asset('images/icon1.png') }}" class="icon">
     @else
       <img src="{{ asset('storage/' . $follow->images) }}" class="icon">
     @endif
@@ -21,11 +21,10 @@
       <div class="timeline-box">
         <div class="tl-left">
         <a href="/profile/{{ $post->user_id }}">
-          @if($post->user->images === 'icon2.png')
-        <img src="{{ asset('images/icon.png') }}" class="icon">
+          @if($post->user->images === 'icon1.png' || !$post->user->images)
+        <img src="{{ asset('images/icon1.png') }}" class="icon">
       @else
-      <img src="{{ $follow->images && file_exists(storage_path('app/public/' . $follow->images)) ? asset('storage/' . $follow->images) : asset('images/icon1.png') }}" class="icon">
-
+      <img src="{{ asset('storage/' . $post->user->images) }}" class="icon">
     @endif
         </a>
         </div>
@@ -39,5 +38,4 @@
     @endforeach
     </ul>
   </div>
-
 </x-login-layout>

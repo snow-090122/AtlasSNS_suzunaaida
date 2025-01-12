@@ -52,7 +52,7 @@
     <nav>
       <ul class="accordion-menu">
         <li><a href="/top">HOME</a></li>
-        <li><a href="/profile/{{ Auth::id() }}">プロフィール</a></li>
+        <li><a href="/profile">プロフィール</a></li>
         <li><a href="/logout">ログアウト</a></li>
       </ul>
     </nav>

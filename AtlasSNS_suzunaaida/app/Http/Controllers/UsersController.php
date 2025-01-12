@@ -10,11 +10,18 @@ use App\Models\Post;
 
 class UsersController extends Controller
 {
-    public function profile($id)
+    public function showMyProfile()
     {
-        $users = User::findOrFail($id);
-        $posts = Post::where('user_id', $id)->latest()->get();
-        return view('users.profile', compact('users', 'posts'));
+        $user = Auth::user();
+        $posts = Post::where('user_id', $user->id)->latest()->get();
+        return view('users.profile', compact('user', 'posts'));
+    }
+
+    public function showUserProfile($id)
+    {
+        $user = User::findOrFail($id);
+        $posts = Post::where('user_id', $user->id)->latest()->get();
+        return view('users.profile', compact('user', 'posts'));
     }
 
     public function logout()
@@ -22,74 +29,55 @@ class UsersController extends Controller
         Auth::logout();
         return redirect('/login');
     }
-
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
-
-        if (!empty($keyword)) {
-            $users = User::where('username', 'like', '%' . $keyword . '%')->where('id', '!=', Auth::id())->get();
-        } else {
-            $users = User::where('id', '!=', Auth::id())->get();
-        }
+        $users = User::where('id', '!=', Auth::id())
+            ->when($keyword, function ($query, $keyword) {
+                return $query->where('username', 'like', '%' . $keyword . '%');
+            })
+            ->get();
 
         return view('users.search', ['users' => $users, 'keyword' => $keyword]);
     }
 
-    public function profileEdit(Request $request)
+    public function editMyProfile(Request $request)
     {
-        $id = $request->input('id');
-        $username = $request->input('username');
-        $mail = $request->input('mail');
-        $password = $request->input('password');
-        $bio = $request->input('bio');
-        $images = $request->file('images');
+        $user = Auth::user();
 
         $request->validate([
             'username' => 'required|string|min:2|max:12',
-            'mail' => 'required|string|min:5|max:40|email|unique:users,email,' . $id,
+            'mail' => 'required|string|min:5|max:40|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|max:20|regex:/^[a-zA-Z0-9]+$/|confirmed',
-            'bio' => 'max:150',
+            'bio' => 'nullable|max:150',
             'images' => 'nullable|mimes:jpg,png,bmp,gif,svg|max:2048',
         ]);
 
-        $updateDate = [
-            'username' => $username,
-            'email' => $mail,
-            'bio' => $bio,
-        ];
+        $updateData = $request->only(['username', 'mail', 'bio']);
 
-        if (!empty($password)) {
-            $updateDate['password'] = bcrypt($password);
-        }
-        if ($request->hasFile('images')) {
-            // 画像を取得
-            $images = $request->file('images');
-
-            // ユニークなファイル名を生成し、保存
-            $image_name = $images->hashName();
-            $images->store('public');
-
-            // データベースを更新
-            User::find($id)->update(['images' => $image_name]);
+        if ($request->filled('password')) {
+            $updateData['password'] = bcrypt($request->input('password'));
         }
 
         if ($request->hasFile('images')) {
-            $user = User::find($id);
 
-            // 古い画像を削除
-            if ($user->images) {
-                Storage::delete('public/' . $user->images);
+            if ($user->icon_image && $user->icon_image !== 'icon1.png') {
+                Storage::delete('public/' . $user->icon_image);
             }
+            // 新しい画像の保存
+            $image = $request->file('images');
 
-            // 新しい画像を保存
-            $image_name = $images->hashName();
-            $images->store('public');
+            $imageName = $user->id . '_' . time() . '.' . $image->getClientOriginalExtension();
+
+            // ストレージに保存
+            $image->storeAs('public/', $imageName);
 
             // データベースを更新
-            $user->update(['images' => $image_name]);
+            $updateData['icon_image'] = $imageName;
         }
 
-        return redirect('/top');
+        $user->update($updateData);
+
+        return redirect()->route('profile.my')->with('success', 'プロフィールが更新されました。');
     }
 }
