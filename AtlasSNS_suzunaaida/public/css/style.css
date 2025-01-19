@@ -294,7 +294,6 @@ a:visited {
     transition: 0.3s;
 }
 
-
 /*edit-modal*/
 .modal-main {
     display: none;
@@ -426,70 +425,204 @@ a:visited {
 /*プロフィール*/
 .auth-profile-box {
     padding-top: 50px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
 }
 
-.auth-profile-box .icon {
-    vertical-align: top;
+.profile-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
 }
 
-.auth-profile-box form {
-    display: inline-block;
+.profile-icon .icon {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
 }
 
-.profile-edit {
-    width: 500px;
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+.profile-row {
     display: flex;
     justify-content: space-between;
-    margin: 30px 0 10px 30px;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.file-upload {
-    display: none;
+.profile-row label {
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.profile-row input,
+.profile-row textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: gray;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 40px;
+    resize: none;
 }
 
 .custom-upload {
-    width: 260px;
-    border: 1px solid #767676;
-    border-radius: 3px;
-    padding: 30px 0;
-}
-
-.profile-edit input {
-    width: 250px;
-    padding: 5px;
-}
-
-.profile-top {
     display: flex;
+    align-items: center;
+    width: 450px;
+    height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #f9f9f9;
     justify-content: center;
 }
 
-.profile-top .icon {
-    margin-left: 100px;
+.custom-upload label {
+    cursor: pointer;
+    color: #555;
+}
+
+.custom-upload input[type="file"] {
+    display: none;
+}
+
+.profile-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 20px auto;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.profile-submit {
+    text-align: center;
+}
+
+/* プロフィールヘッダー */
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.profile-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 15px;
 }
 
 .profile-wrapper {
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    gap: 10px;
 }
 
-.other-profile {
-    margin: 10px 0 30px 30px;
+.profile-section {
+    display: flex;
+    align-items: center;
 }
 
-.other-profile p {
-    display: inline-block;
-    text-align: left;
+.profile-section h3 {
+    font-size: 15px;
+    margin: 0 20px 0 0;
+    color: black;
 }
 
-.profile-title {
-    width: 150px;
+.profile-section p {
+    font-size: 15px;
+    color: black;
+    margin: 0;
+    text-align: center;
 }
 
-.profile-text {
-    max-width: 400px;
+.btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.profile-top form {
-    margin: auto 0 0 auto;
+.follow-btn {
+    background-color: #00bfff;
+    color: white;
+}
+
+.follow-btn:hover {
+    background-color: #009acd;
+
+}
+
+.remove-btn {
+    background-color: red;
+    color: white;
+}
+
+.remove-btn:hover {
+    background-color: #d00;
+
+}
+
+/* タイムライン */
+.timeline-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.timeline-box {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.tl-left {
+    margin-right: 10px;
+}
+
+.tl-left img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.tl-middle {
+    flex-grow: 1;
+}
+
+.tl-middle p {
+    margin: 0;
+    color: #333;
+}
+
+.tl-right {
+    font-size: 12px;
+    color: #999;
+    margin-left: auto;
 }

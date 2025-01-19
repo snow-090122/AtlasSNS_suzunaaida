@@ -4,10 +4,10 @@
     <div class="icon-wrapper">
       @foreach($followed as $follow)
       <a href="/profile/{{ $follow->id }}">
-      @if($follow->images === 'icon1.png' || !$follow->images)
+      @if($follow->images === 'icon1.png')
       <img src="{{ asset('images/icon1.png') }}" class="icon">
     @else
-      <img src="{{ asset('storage/' . $follow->images) }}" class="icon">
+      <img src="{{ asset('storage/' . $follow->icon_image) }}" class="icon">
     @endif
       </a>
     @endforeach
@@ -20,11 +20,11 @@
       <li class="timeline-list">
       <div class="timeline-box">
         <div class="tl-left">
-        <a href="/profile/{{ $post->user_id }}">
-          @if($post->user->images === 'icon1.png' || !$post->user->images)
+        <a href="/profile/{{ $post->user_id }}">>
+          @if($post->user->images === 'icon1.png')
         <img src="{{ asset('images/icon1.png') }}" class="icon">
       @else
-      <img src="{{ asset('storage/' . $post->user->images) }}" class="icon">
+      <img src="{{ asset('storage/' . $post->user->icon_image) }}" class="icon">
     @endif
         </a>
         </div>
@@ -32,7 +32,7 @@
         <p>{{ $post->user->username }}</p>
         <p>{!! nl2br(e($post->post)) !!}</p>
         </div>
-        <p class="tl-right">{{ substr($post->created_at, 0, 16) }}</p>
+        <p class="tl-right" {{$post->created_at->format('Y-m-d h:i')}}></p>
       </div>
       </li>
     @endforeach

@@ -12,66 +12,133 @@
 
   @if(Auth::id() === $user->id)
     <div class="auth-profile-box">
-    @if($user->images === 'icon1.png')
-    <img src="{{asset('images/icon1.png')}}" class="icon">
+    <div class="profile-layout">
+      <div class="profile-icon">
+      @if($user->icon_image === 'icon1.png')
+      <img src="{{ asset('images/icon1.png') }}" alt="プロフィールアイコン" class="icon">
+    @else
+      <img src="{{ asset('storage/' . $user->icon_image) }}" alt="プロフィールアイコン" class="icon">
+    @endif
+      </div>
+
+      {{-- フォーム開始 --}}
+      <div class="profile-form">
+      {{ Form::open(['route' => 'profile.edit', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
+      @csrf
+
+      <div class="profile-row">
+        <label for="username">ユーザー名</label>
+        <input type="text" value="{{ old('username', $user->username) }}" name="username" id="username" required>
+        @error('username')
+      <div class="red">{{ $message }}</div>
+    @enderror
+      </div>
+
+      <div class="profile-row">
+        <label for="mail">メールアドレス</label>
+        <input type="email" value="{{ old('mail', $user->email) }}" name="email" id="mail" required>
+        @error('mail')
+      <div class="red">{{ $message }}</div>
+    @enderror
+      </div>
+
+      <div class="profile-row">
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password">
+        @error('password')
+      <div class="red">{{ $message }}</div>
+    @enderror
+      </div>
+
+      <div class="profile-row">
+        <label for="password_confirmation">パスワード確認</label>
+        <input type="password" name="password_confirmation" id="password_confirmation">
+      </div>
+
+      <div class="profile-row">
+        <label for="bio">自己紹介</label>
+        <textarea name="bio" id="bio" maxlength="150">{{ old('bio', $user->bio) }}</textarea>
+        @error('bio')
+      <div class="red">{{ $message }}</div>
+    @enderror
+      </div>
+
+      <div class="profile-row">
+        <label for="images">アイコン画像</label>
+        <div class="custom-upload">
+        <span>ファイルを選択</span>
+        <input type="file" name="images" id="images" accept=".jpg,.png,.bmp,.gif,.svg">
+        </div>
+        @error('images')
+      <div class="red">{{ $message }}</div>
+    @enderror
+      </div>
+
+      <div class="profile-submit">
+        <input type="submit" value="更新" class="profile-btn">
+      </div>
+
+      {{ Form::close() }}
+      </div>
+    </div>
+    </div>
   @else
-  <img src="{{asset('storage/' . $user->images)}}" class="icon">
+    <div class="profile-header">
+    <!-- アイコン画像 -->
+    @if($user->icon_image === 'icon1.png')
+    <img src="{{ asset('images/icon1.png') }}" class="profile-icon">
+  @else
+  <img src="{{ asset('storage/' . $user->icon_image) }}" class="profile-icon">
 @endif
-    {{ Form::open(['route' => 'profile.edit', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
+
+    <!-- ユーザー情報 -->
+    <div class="profile-wrapper">
+      <div class="profile-section">
+      <h3>ユーザー名</h3>
+      <p>{{ $user->username }}</p>
+      </div>
+      <div class="profile-section">
+      <h3>自己紹介</h3>
+      <p>{{ $user->bio }}</p>
+      </div>
+    </div>
+
+    @if(!Auth::user()->isFollowing($user->id))
+    {{ Form::open(['url' => '/follow']) }}
     @csrf
-
-    <div class="profile-edit">
-      <label for="username">ユーザー名</label>
-      <input type="text" value="{{ old('username', $user->username) }}" name="username" id="username" required>
-      @error('username')
-      <div class="red">{{ $message }}</div>
-    @enderror
-    </div>
-
-    <div class="profile-edit">
-      <label for="mail">メールアドレス</label>
-      <input type="email" value="{{ old('mail', $user->email) }}" name="mail" id="mail" required>
-      @error('mail')
-      <div class="red">{{ $message }}</div>
-    @enderror
-    </div>
-
-    <div class="profile-edit">
-      <label for="password">パスワード</label>
-      <input type="password" name="password" id="password">
-      @error('password')
-      <div class="red">{{ $message }}</div>
-    @enderror
-    </div>
-
-    <div class="profile-edit">
-      <label for="password_confirmation">パスワード確認</label>
-      <input type="password" name="password_confirmation" id="password_confirmation">
-    </div>
-
-    <div class="profile-edit">
-      <label for="bio">自己紹介</label>
-      <textarea name="bio" id="bio" maxlength="150" placeholder="自己紹介を入力">{{ old('bio', $user->bio) }}</textarea>
-      @error('bio')
-      <div class="red">{{ $message }}</div>
-    @enderror
-    </div>
-
-    <div class="profile-edit">
-      <label for="images">アイコン画像</label>
-      <label for="images" class="custom-upload">ファイルを選択</label>
-      <input type="file" name="images" id="images" accept=".jpg,.png,.bmp,.gif,.svg" class="file-upload" hidden>
-      @error('images')
-      <div class="red">{{ $message }}</div>
-    @enderror
-    </div>
-
-    <input type="submit" value="更新" class="profile-btn">
+    <input type="hidden" name="followed_id" value="{{ $user->id }}">
+    <input type="submit" value="フォローする" class="btn follow-btn">
     {{ Form::close() }}
-    </div>
   @else
-    <div class="alert alert-warning">
-    <p>このプロフィールは編集できません。</p>
+  {{ Form::open(['url' => '/remove']) }}
+  @csrf
+  <input type="hidden" name="followed_id" value="{{ $user->id }}">
+  <input type="submit" value="フォロー解除" class="btn remove-btn">
+  {{ Form::close() }}
+@endif
+    </div>
+
+    <div>
+    <ul class="timeline-list">
+      @foreach($posts as $post)
+      <li class="timeline-box">
+      <div class="tl-left">
+      @if($post->user->icon_image === 'icon1.png')
+      <img src="{{ asset('images/icon1.png') }}" class="icon">
+    @else
+      <img src="{{ asset('storage/' . $post->user->icon_image) }}" class="icon">
+    @endif
+      </div>
+      <div class="tl-middle">
+      <p>{{ $post->user->username }}</p>
+      <p>{!! nl2br(e($post->post)) !!}</p>
+      </div>
+
+      <p class="tl-right">{{ substr($post->created_at, 0, 16) }}</p>
+      </li>
+    @endforeach
+    </ul>
     </div>
   @endif
+
 </x-login-layout>

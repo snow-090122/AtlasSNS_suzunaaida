@@ -18,7 +18,7 @@
       @if($user->images === 'icon1.png')
       <img src="{{asset('images/icon1.png')}}" class="icon">
     @else
-      <img src="{{asset('storage/' . $user->images)}}" class="icon">
+      <img src="{{asset('storage/' . $user->icon_image)}}" class="icon">
     @endif
 
       <p>{{$user->username}}</p>

@@ -9,7 +9,7 @@
       @if($follow->images === 'icon1.png')
       <img src="{{asset('images/icon1.png')}}" class="icon">
     @else
-      <img src="{{asset('storage/' . $follow->images)}}" class="icon">
+      <img src="{{asset('storage/' . $follow->icon_image)}}" class="icon">
     @endif
       </a>
     @endforeach
@@ -32,7 +32,7 @@
       @if($post->user->images === 'icon1.png')
       <img src="{{asset('images/icon1.png')}}" class="icon">
     @else
-      <img src="{{asset('storage/' . $post->user->images)}}" class="icon">
+      <img src="{{asset('storage/' . $post->user->icon_image)}}" class="icon">
     @endif
       </a>
       </div>

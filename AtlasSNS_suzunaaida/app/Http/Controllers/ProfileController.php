@@ -2,55 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Post;
 
 class ProfileController extends Controller
 {
-    /**
-     * プロフィールページを表示
-     */
-    public function profile()
+    // 自分のプロフィールを表示
+    public function showMyProfile()
     {
-        $user = Auth::user(); // ログイン中のユーザー情報を取得
-        return view('profile', compact('user')); // ビューにデータを渡す
+        $user = Auth::user();
+        $posts = Post::where('user_id', $user->id)->latest()->get();
+        return view('users.profile', compact('user', 'posts'));
     }
 
-    /**
-     * プロフィールを更新する
-     */
-    public function updateProfile(ProfileUpdateRequest $request)
+    // 自分のプロフィールを編集・更新
+    public function editMyProfile(Request $request)
     {
         $user = Auth::user();
 
-        // フィールドの更新
-        $user->username = $request->input('username');
-        $user->mail = $request->input('mail');
-        $user->bio = $request->input('bio');
+        $request->validate([
+            'username' => 'required|string|min:2|max:12',
+            'email' => 'required|string|min:5|max:40|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8|max:20|regex:/^[a-zA-Z0-9]+$/|confirmed',
+            'bio' => 'nullable|max:150',
+            'icon_image' => 'nullable|mimes:jpg,png,bmp,gif,svg|max:2048',
+        ]);
 
-        // パスワードの更新（必要な場合のみ）
+        $updateData = $request->only(['username', 'email', 'bio']);
+
         if ($request->filled('password')) {
-            $user->password = Hash::make($request->input('password'));
+            $updateData['password'] = bcrypt($request->input('password'));
         }
 
-        // プロフィール画像の更新
-        if ($request->hasFile('images')) {
-            // 古い画像を削除
-            if ($user->profile_image && Storage::exists('public/' . $user->profile_image)) {
-                Storage::delete('public/' . $user->profile_image);
+        if ($request->hasFile('icon_image')) {
+            if ($user->icon_image && $user->icon_image !== 'icon1.png') {
+                Storage::delete('public/' . $user->icon_image);
             }
 
-            // 新しい画像を保存
-            $path = $request->file('images')->store('profile_images', 'public');
-            $user->profile_image = $path;
+            $image = $request->file('icon_image');
+            $imageName = $user->id . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/', $imageName);
+            $updateData['icon_image'] = $imageName;
         }
 
-        // データを保存
-        $user->save();
+        $user->update($updateData);
 
-        // 成功メッセージとリダイレクト
-        return redirect()->route('top-page')->with('success', 'プロフィールを更新しました');
+        return redirect()->route('profile.my')->with('success', 'プロフィールが更新されました。');
     }
 }

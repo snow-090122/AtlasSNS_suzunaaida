@@ -34,9 +34,12 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/delete/{id}', [PostsController::class, 'delete']);
 
   //プロフィール関連
-  Route::get('/profile/{id}', [UsersController::class, 'showUserProfile'])->name('profile.user');
-  Route::get('/profile', [UsersController::class, 'showMyProfile'])->name('profile.my');
-  Route::post('/profile/edit', [UsersController::class, 'editMyProfile'])->name('profile.edit');
+  Route::get('/profile', [ProfileController::class, 'showMyProfile'])->name('profile.my');
+  Route::post('/profile/edit', [ProfileController::class, 'editMyProfile'])->name('profile.edit');
+  Route::get('/profile/{id}', [UsersController::class, 'profile'])->name('profile.show');
+  Route::post('/profile/{id}/follow', [UsersController::class, 'follow'])->name('profile.follow');
+  Route::post('/profile/{id}/unfollow', [UsersController::class, 'unfollow'])->name('profile.unfollow');
+
   //検索関連
   Route::get('/search', [UsersController::class, 'search']);
   Route::post('/search', [UsersController::class, 'search']);

@@ -62,8 +62,8 @@ header p {
   color: #fff;
   font-size: 1em;
   font-weight: normal;
-  text-align: right;
-  margin-bottom: 10pxS;
+  text-align: left;
+  margin-bottom: 10px;
 }
 
 .input {
