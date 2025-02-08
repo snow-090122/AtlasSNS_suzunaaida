@@ -4,7 +4,7 @@
     <div class="icon-wrapper">
       @foreach($followed as $follow)
       <a href="/profile/{{ $follow->id }}">
-      @if($follow->images === 'icon1.png')
+      @if($follow->icon_image === 'icon1.png' || empty($follow->icon_image))
       <img src="{{ asset('images/icon1.png') }}" class="icon">
     @else
       <img src="{{ asset('storage/' . $follow->icon_image) }}" class="icon">
@@ -14,14 +14,15 @@
     </div>
   </div>
 
+
   <div>
     <ul>
       @foreach($followed_posts as $post)
       <li class="timeline-list">
       <div class="timeline-box">
         <div class="tl-left">
-        <a href="/profile/{{ $post->user_id }}">>
-          @if($post->user->images === 'icon1.png')
+        <a href="/profile/{{ $post->user_id }}">
+          @if($post->user->icon_image === 'icon1.png' || empty($post->user->icon_image))
         <img src="{{ asset('images/icon1.png') }}" class="icon">
       @else
       <img src="{{ asset('storage/' . $post->user->icon_image) }}" class="icon">

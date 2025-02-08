@@ -14,14 +14,17 @@ class FollowsController extends Controller
     {
         $user = Auth::user();
 
+        $follows = $user->following()->get();
+        $follows_id = $user->following()->pluck('users.id')->toArray();
+
         $follows_posts = Post::with('user')
-            ->whereIn('user_id', $user->followUsers()->pluck('users.id')->toArray())
-            ->orderBy('posts.created_at', 'desc')
+            ->whereIn('user_id', $follows_id)
+            ->orderBy('created_at', 'desc')
             ->select('posts.*')
             ->get();
 
         return view('follows.followList', [
-            'follows' => $user->follows,
+            'follows' => $user->following,
             'follows_posts' => $follows_posts,
         ]);
     }
@@ -29,7 +32,9 @@ class FollowsController extends Controller
 
     public function followerList(): \Illuminate\View\View
     {
-        $followed = Auth::user()->followUsers()->get();
+        $user = Auth::user();
+
+        $followed = Auth::user()->followers()->get();
         $followed_id = $followed->pluck('id');
 
         $followed_posts = Post::with('user')
@@ -51,11 +56,12 @@ class FollowsController extends Controller
 
         $following_id = Auth::id();
         $followed_id = $request->get('followed_id');
-
-        Follow::create([
-            'following_id' => $following_id,
-            'followed_id' => $followed_id,
-        ]);
+        if (!Follow::where('following_id', $following_id)->where('followed_id', $followed_id)->exists()) {
+            Follow::create([
+                'following_id' => $following_id,
+                'followed_id' => $followed_id,
+            ]);
+        }
 
         return back()->with('success', 'フォローしました。');
     }
@@ -67,7 +73,7 @@ class FollowsController extends Controller
             'followed_id' => 'required|exists:users,id',
         ]);
 
-        $followed_id = $request->get('followed_id');
+        $followed_id = $request->input('followed_id');
 
         Follow::where([
             ['following_id', '=', Auth::id()],

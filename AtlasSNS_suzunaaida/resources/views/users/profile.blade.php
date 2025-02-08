@@ -14,7 +14,7 @@
     <div class="auth-profile-box">
     <div class="profile-layout">
       <div class="profile-icon">
-      @if($user->icon_image === 'icon1.png')
+      @if(empty($user->icon_image) || $user->icon_image === 'icon1.png')
       <img src="{{ asset('images/icon1.png') }}" alt="プロフィールアイコン" class="icon">
     @else
       <img src="{{ asset('storage/' . $user->icon_image) }}" alt="プロフィールアイコン" class="icon">
@@ -30,15 +30,15 @@
         <label for="username">ユーザー名</label>
         <input type="text" value="{{ old('username', $user->username) }}" name="username" id="username" required>
         @error('username')
-      <div class="red">{{ $message }}</div>
+      <span class="red">{{ $message }}</span>
     @enderror
       </div>
 
       <div class="profile-row">
-        <label for="mail">メールアドレス</label>
+        <label for="email">メールアドレス</label>
         <input type="email" value="{{ old('mail', $user->email) }}" name="email" id="mail" required>
-        @error('mail')
-      <div class="red">{{ $message }}</div>
+        @error('email')
+      <span class="red">{{ $message }}</span>
     @enderror
       </div>
 
@@ -46,7 +46,7 @@
         <label for="password">パスワード</label>
         <input type="password" name="password" id="password">
         @error('password')
-      <div class="red">{{ $message }}</div>
+      <span class="red">{{ $message }}</span>
     @enderror
       </div>
 
@@ -59,15 +59,17 @@
         <label for="bio">自己紹介</label>
         <textarea name="bio" id="bio" maxlength="150">{{ old('bio', $user->bio) }}</textarea>
         @error('bio')
-      <div class="red">{{ $message }}</div>
+      <span class="red">{{ $message }}</span>
     @enderror
       </div>
 
       <div class="profile-row">
-        <label for="images">アイコン画像</label>
+        <label for="icon_image">アイコン画像</label>
         <div class="custom-upload">
-        <span>ファイルを選択</span>
-        <input type="file" name="images" id="images" accept=".jpg,.png,.bmp,.gif,.svg">
+        <label for="images" class="custom-upload-label">ファイルを選択</label>
+        <input type="file" name="icon_image" id="images" accept=".jpg,.png,.bmp,.gif,.svg">
+        <span id="file-name-display">ファイルが選択されていません</span>
+
         </div>
         @error('images')
       <div class="red">{{ $message }}</div>

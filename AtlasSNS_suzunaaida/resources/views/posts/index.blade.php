@@ -11,8 +11,8 @@
 
     {{ Form::open(['url' => '/postCreate']) }}
     @csrf
-    @if(Auth::user()->image === 'icon1.png')
-    <img class="icon" src="{{ asset('image/icon.png') }}">
+    @if(empty(Auth::user()->icon_image) || Auth::user()->icon_image === 'icon1.png')
+    <img class="icon" src="{{ asset('images/icon1.png') }}">
   @else
   <img class="icon" src="{{ asset('storage/' . Auth::user()->icon_image) }}">
 @endif
@@ -27,10 +27,10 @@
       <li class="timeline-list">
       <div class="timeline-box">
         <div class="tl-left">
-        @if($post->user->image === 'icon1.png')
-      <img class="icon" src="{{ asset('images/icon.png') }}">
+        @if(empty($post->user->icon_image) || $post->user->icon_image === 'icon1.png')
+      <img class="icon" src="{{ asset('images/icon1.png') }}" alt="デフォルトアイコン">
     @else
-    <img class="icon" src="{{asset('storage/' . $post->user->icon_image)}}">
+    <img class="icon" src="{{ asset('storage/' . $post->user->icon_image) }}" alt="ユーザーアイコン">
   @endif
         </div>
         <div class="tl-middle">

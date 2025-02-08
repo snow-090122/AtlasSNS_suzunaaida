@@ -56,6 +56,19 @@ $(function () {
   });
 });
 
+$(function () {
+  $('#images').on('change', function () {
+    const file = this.files[0];
+    const fileNameDisplay = $('#file-name-display');
+
+    if (file) {
+      fileNameDisplay.text(file.name);
+    } else {
+      fileNameDisplay.text('ファイルが選択されていません');
+    }
+  });
+});
+
 var user = window.user || null;
 if (user && user.username) {
   console.log(user.username);

@@ -31,14 +31,15 @@
       <h1><a href="/top"><img src="{{ asset('images/atlas.png') }}" alt="Atlas"></a></h1>
       <div id="head-container">
         <div id="head-menu">
-          <p><span class="header-name">{{ Auth::user()->username }}さん</span></p>
-          <span class="triangle-btn"></span>
-          @if(Auth::user()->images && file_exists(public_path('storage/' . Auth::user()->images)))
-        <img class="icon" src="{{ asset('storage/' . Auth::user()->images) }}">
+          <div class="header-name-wrapper">
+            <p><span class="header-name">{{ Auth::user()->username }}さん</span></p>
+            <span class="triangle-btn"></span>
+            @if(!empty(Auth::user()->icon_image) && file_exists(public_path('storage/' . Auth::user()->icon_image)))
+        <img class="icon" src="{{ asset('storage/' . Auth::user()->icon_image) }}" alt="ユーザーアイコン">
       @else
-      <img class="icon" src="{{ asset('images/icon1.png') }}">
-    @endif
-
+    <img class="icon" src="{{ asset('images/icon1.png') }}" alt="デフォルトアイコン">
+  @endif
+          </div>
         </div>
       </div>
     </div>

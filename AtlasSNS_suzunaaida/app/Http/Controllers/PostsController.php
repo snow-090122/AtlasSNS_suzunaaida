@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post; // モデルがApp\Modelsに存在する場合
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
@@ -11,9 +11,17 @@ class PostsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $posts = Post::get();
 
-        return view('posts.index', ['posts' => $posts]);
+        $followedUserIds = $user->following()->pluck('users.id');
+
+        $posts = Post::whereIn('user_id', $followedUserIds)->orWhere('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('posts.index', [
+            'user' => $user,
+            'posts' => $posts,
+        ]);
     }
 
     public function postCreate(Request $request)
@@ -30,7 +38,7 @@ class PostsController extends Controller
 
         $post->save();
 
-        return redirect('/top');
+        return redirect('/top')->with('status', '投稿が作成されました！');
     }
 
     public function postEdit(Request $request)
@@ -47,7 +55,7 @@ class PostsController extends Controller
         $post->post = $edit_post;
         $post->save();
 
-        return redirect('/top');
+        return redirect('/top')->with('status', '投稿が編集されました！');
     }
 
     public function delete(int $id)
@@ -56,7 +64,7 @@ class PostsController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        return redirect('/top');
+        return redirect('/top')->with('status', '投稿が削除されました！');
     }
     //編集画面を表示
     public function edit($id)

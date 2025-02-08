@@ -48,7 +48,6 @@ class ProfileController extends Controller
             $image->storeAs('public/', $imageName);
             $updateData['icon_image'] = $imageName;
         }
-
         $user->update($updateData);
 
         return redirect()->route('profile.my')->with('success', 'プロフィールが更新されました。');
