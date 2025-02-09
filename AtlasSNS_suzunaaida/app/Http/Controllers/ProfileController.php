@@ -30,7 +30,27 @@ class ProfileController extends Controller
             'password' => 'nullable|min:8|max:20|regex:/^[a-zA-Z0-9]+$/|confirmed',
             'bio' => 'nullable|max:150',
             'icon_image' => 'nullable|mimes:jpg,png,bmp,gif,svg|max:2048',
+        ], [
+            'username.required' => 'ユーザー名は必須項目です。',
+            'username.min' => 'ユーザー名は2文字以上で入力してください。',
+            'username.max' => 'ユーザー名は12文字以内で入力してください。',
+
+            'email.required' => 'メールアドレスは必須項目です。',
+            'email.email' => '正しいメールアドレスの形式で入力してください。',
+            'email.unique' => 'このメールアドレスはすでに登録されています。',
+
+            'password.min' => 'パスワードは8文字以上で入力してください。',
+            'password.max' => 'パスワードは20文字以内で入力してください。',
+            'password.regex' => 'パスワードは英数字のみ使用できます。',
+            'password.confirmed' => 'パスワード確認が一致しません。',
+
+            'bio.max' => '自己紹介は150文字以内で入力してください。',
+
+            'icon_image.mimes' => 'アップロードできる画像の形式は jpg, png, bmp, gif, svg のみです。',
+            'icon_image.max' => '画像のサイズは2MB以内でアップロードしてください。',
         ]);
+
+
 
         $updateData = $request->only(['username', 'email', 'bio']);
 

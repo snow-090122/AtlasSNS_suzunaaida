@@ -28,6 +28,10 @@ class PostsController extends Controller
     {
         $validated = $request->validate([
             'post' => 'required|min:1|max:150',
+        ], [
+            'post.required' => '投稿内容は必須です。',
+            'post.min' => '投稿内容は1文字以上で入力してください。',
+            'post.max' => '投稿内容は150文字以内で入力してください。',
         ]);
 
         // Eloquentのcreateメソッドを利用して投稿を作成
@@ -45,6 +49,10 @@ class PostsController extends Controller
     {
         $validated = $request->validate([
             'editpost' => 'required|min:1|max:150',
+        ], [
+            'editpost.required' => '投稿内容は必須です。',
+            'editpost.min' => '投稿内容は1文字以上で入力してください。',
+            'editpost.max' => '投稿内容は150文字以内で入力してください。',
         ]);
 
         $edit_id = $request->input('edit-id');
@@ -83,6 +91,10 @@ class PostsController extends Controller
     {
         $validated = $request->validate([
             'post' => 'required|min:1|max:150',
+        ], [
+            'post.required' => '投稿内容は必須です。',
+            'post.min' => '投稿内容は1文字以上で入力してください。',
+            'post.max' => '投稿内容は150文字以内で入力してください。',
         ]);
 
         $post = Post::findOrFail($id);

@@ -123,6 +123,7 @@ header p {
 .btn:hover {
   transform: scale(1.05);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  color: #fff;
 }
 
 /*リンク*/
@@ -142,5 +143,5 @@ header p {
   color: red;
   font-size: 0.9em;
   white-space: nowrap;
-  margin-top: 0.3rem;
+  margin-top: 0.3rem 0.1rem;
 }

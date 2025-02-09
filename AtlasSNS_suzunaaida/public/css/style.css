@@ -210,18 +210,17 @@ a:visited {
 .icon {
     width: 50px;
     height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .red {
     color: #ff0000;
-    display: block;
-    margin-top: 5px;
+    font-weight: bold;
+    margin: 10px 0;
     font-size: 14px;
     display: block;
-    position: absolute;
-    top: 100%;
-    left: 160px;
-    line-height: 1.5;
+    top: 0;
 }
 
 .center {
@@ -243,19 +242,18 @@ a:visited {
 
 /*timeline*/
 .timeline-list {
-    padding: 30px;
+    padding: 20px;
     border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-.timeline-list:last-child {
-    border-bottom: none;
-}
 
 .timeline-box {
     display: flex;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #eee;
+    gap: 15px;
+    flex-grow: 1;
 }
 
 .tl-left {
@@ -281,12 +279,18 @@ a:visited {
 
 /*削除ボタン*/
 .btn-wrapper {
-    text-align: right;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
     margin-right: 50px;
+    padding: 10px;
 }
 
 .delete-box {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .delete-btn {
@@ -490,8 +494,25 @@ a:visited {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 50px;
     position: relative;
+}
+
+.input-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.profile-row .red {
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+    position: relative;
+    top: 0;
 }
 
 .profile-row label {

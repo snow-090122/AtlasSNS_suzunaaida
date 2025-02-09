@@ -39,10 +39,23 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'icon_image' => ['nunllable', 'string'],
+            'username' => ['required', 'string', 'min:2', 'max:12'],
+            'email' => ['required', 'string', 'email', 'min:5', 'max:40', 'unique:users'],
+            'password' => ['required', 'alpha_num', 'min:8', 'max:20', 'confirmed'],
+            'icon_image' => ['nullable', 'string'],
+        ], [
+            'required' => ':attribute は必須項目です。',
+            'email' => ':attribute は正しい形式で入力してください。',
+            'min' => ':attribute は最低 :min文字以上で入力してください。',
+            'max' => ':attribute は最大 :max文字までです。',
+            'alpha_num' => ':attribute は英数字のみで入力してください。',
+            'unique' => 'この :attribute はすでに登録されています。',
+            'confirmed' => ':attribute が確認用と一致しません。',
+        ], [
+            'username' => 'ユーザー名',
+            'email' => 'メールアドレス',
+            'password' => 'パスワード',
+            'icon_image' => 'アイコン画像',
         ]);
     }
 
@@ -53,7 +66,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'icon_image' => $data['icon_image'] ?? 'default_icon.png',
+            'icon_image' => $data['icon_image'] ?? 'icon1.png',
         ]);
     }
 

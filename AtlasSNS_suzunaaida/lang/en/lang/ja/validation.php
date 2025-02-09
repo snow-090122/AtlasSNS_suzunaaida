@@ -10,18 +10,16 @@ return [
     'string' => ':attribute は最大 :max 文字までです。',
   ],
   'confirmed' => ':attribute が確認用と一致しません。',
-  'attributes' => [
-    'name' => '名前',
-    'email' => 'メールアドレス',
-    'password' => 'パスワード',
-  ],
+  'exists' => ':attribute は登録されていません。',
+  'throttle' => 'ログイン試行が多すぎます。:seconds秒後に再試行してください。',
 
   'attributes' => [
+    'name' => '名前',
     'username' => 'ユーザー名',
     'email' => 'メールアドレス',
     'password' => 'パスワード',
+    'password_confirmation' => 'パスワード確認',
     'bio' => '自己紹介',
     'icon_image' => 'アイコン画像',
   ],
-
 ];
