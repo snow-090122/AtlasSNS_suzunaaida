@@ -65,11 +65,11 @@
 
       <div class="profile-row">
         <label for="icon_image">アイコン画像</label>
+        <div class="input-wrapper">
         <div class="custom-upload">
-        <label for="images" class="custom-upload-label">ファイルを選択</label>
-        <input type="file" name="icon_image" id="images" accept=".jpg,.png,.bmp,.gif,.svg">
-        <span id="file-name-display">ファイルが選択されていません</span>
-
+          <label for="images" class="custom-upload-label">ファイルを選択</label>
+          <input type="file" name="icon_image" id="images" accept=".jpg,.png,.bmp,.gif,.svg">
+        </div>
         </div>
         @error('images')
       <div class="red">{{ $message }}</div>

@@ -243,18 +243,17 @@ a:visited {
 
 /* timeline */
 .timeline-list {
-    padding: 20px;
+    padding: 30px;
     border-bottom: 1px solid #ccc;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
 }
 
+.timeline-list:last-child {
+    border-bottom: none;
+}
 
 .timeline-box {
     display: flex;
-    gap: 15px;
-    flex-grow: 1;
+    align-items: flex-start;
 }
 
 .tl-left {
@@ -543,19 +542,26 @@ textarea {
     border-radius: 5px;
     padding: 10px;
     font-size: 16px;
-    background-color: #f9f9f9;
+    background-color: #fff;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 .custom-upload:hover {
-    background-color: #e6e6e6;
+    background-color: #fff;
 }
 
 .custom-upload label {
-    cursor: pointer;
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
     color: #555;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 .custom-upload input[type="file"] {
